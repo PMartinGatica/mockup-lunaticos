@@ -37,7 +37,7 @@ export default function Numeros() {
 
           <div class="flex flex-col items-center gap-2">
             <span class="font-oswald font-700 text-6xl md:text-7xl lg:text-8xl text-white leading-none">
-              <span class="text-primary">{marcas}</span>+
+              +<span class="text-primary">{marcas}</span>
             </span>
             <span class="text-white/35 font-dm text-xs tracking-widest uppercase">Marcas y equipos</span>
           </div>

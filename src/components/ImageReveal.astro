@@ -21,7 +21,7 @@ const {
   350vh scroll space → image holds fully visible for ~60% of scroll (~210vh)
   Timeline: fade-in (0–0.2) · hold (0.2–0.80) · fade-out (0.80–0.95) · bg gone (0.95–1.0)
 -->
-<div class="ir-wrap relative" style="height: 350vh;">
+<div class="ir-wrap relative" style="height: 250vh;">
   <div class="ir-sticky sticky top-0 overflow-hidden bg-black" style="height: 100dvh;">
 
     <!-- Full-screen image -->
@@ -46,6 +46,16 @@ const {
     <!-- Brand accent lines -->
     <div class="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-transparent via-primary to-transparent opacity-50 pointer-events-none"></div>
     <div class="absolute right-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-transparent via-danger to-transparent opacity-50 pointer-events-none"></div>
+
+    <!-- Scroll indicator -->
+    <div class="ir-scroll-hint absolute bottom-8 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1.5 pointer-events-none opacity-0">
+      <span class="font-dm text-[10px] tracking-[0.25em] uppercase text-white/40">Seguí scrolleando</span>
+      <div class="scroll-bounce">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 5v14M5 12l7 7 7-7" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
 
     <!-- Section label (optional) -->
     {label && (
@@ -77,9 +87,11 @@ const {
     const img    = wrap.querySelector<HTMLElement>('.ir-img')!
     const sticky = wrap.querySelector<HTMLElement>('.ir-sticky')!
     const label  = wrap.querySelector<HTMLElement>('.ir-label')
+    const hint   = wrap.querySelector<HTMLElement>('.ir-scroll-hint')!
 
     // Hidden initially
-    gsap.set(img, { opacity: 0, scale: 1.08 })
+    gsap.set(img,  { opacity: 0, scale: 1.08 })
+    gsap.set(hint, { opacity: 0 })
     if (label) gsap.set(label, { opacity: 0, y: 30 })
 
     const tl = gsap.timeline({
@@ -87,55 +99,78 @@ const {
         trigger: wrap,
         start:   'top top',
         end:     'bottom bottom',
-        scrub:   1.5,   // slightly higher = smoother on mobile
+        scrub:   0.8,
       },
     })
 
-    // ── Fade IN quickly (positions 0 → 0.2) ──
+    // ── Fade IN muy rápido (0 → 0.10) ──
     tl.to(img, {
       opacity:  1,
       scale:    1,
-      duration: 0.2,
+      duration: 0.10,
       ease:     'power2.out',
     })
 
-    // ── Label rises in slightly after (0.3 → 0.45) ──
+    // ── Label sube (0.12 → 0.22) ──
     if (label) {
       tl.to(label, {
         opacity:  1,
         y:        0,
-        duration: 0.15,
+        duration: 0.10,
         ease:     'power2.out',
-      }, 0.3)
+      }, 0.12)
     }
 
-    // ── HOLD at full opacity: 0.2 → 0.80 (gap in timeline, GSAP holds last value) ──
+    // ── Scroll hint aparece (0.15 → 0.25) ──
+    tl.to(hint, {
+      opacity: 1,
+      duration: 0.10,
+      ease: 'power2.out',
+    }, 0.15)
 
-    // ── Fade OUT (positions 0.80 → 0.95) ──
+    // ── HOLD: 0.10 → 0.78  (foto a plena vista, ~170vh de las 250vh) ──
+
+    // ── Scroll hint desaparece (0.65 → 0.75) antes del fade-out ──
+    tl.to(hint, {
+      opacity: 0,
+      duration: 0.10,
+      ease: 'power2.in',
+    }, 0.65)
+
+    // ── Fade OUT rápido (0.78 → 0.93) ──
     tl.to(img, {
       opacity:  0,
       scale:    0.97,
       duration: 0.15,
       ease:     'power2.in',
-    }, 0.80)
+    }, 0.78)
 
     if (label) {
       tl.to(label, {
         opacity:  0,
         duration: 0.12,
         ease:     'power2.in',
-      }, 0.80)
+      }, 0.78)
     }
 
-    // ── Clear sticky bg (0.95 → 1.0) ──
+    // ── Limpia sticky bg (0.93 → 1.0) ──
     tl.to(sticky, {
       opacity:  0,
-      duration: 0.05,
-    }, 0.95)
+      duration: 0.07,
+    }, 0.93)
   })
 </script>
 
 <style>
+  .scroll-bounce {
+    animation: bounce-arrow 1.6s ease-in-out infinite;
+  }
+  @keyframes bounce-arrow {
+    0%   { transform: translateY(0);   opacity: 0.5; }
+    50%  { transform: translateY(6px); opacity: 1;   }
+    100% { transform: translateY(0);   opacity: 0.5; }
+  }
+
   .halftone-red {
     background-image: radial-gradient(circle, #CC0000 1.5px, transparent 1.5px);
     background-size: 12px 12px;
