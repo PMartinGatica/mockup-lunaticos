@@ -1,0 +1,131 @@
+---
+import Header from '@/components/Header.astro'
+import Footer from '@/components/Footer.astro'
+import '@fontsource/oswald/400.css'
+import '@fontsource/oswald/600.css'
+import '@fontsource/oswald/700.css'
+import '@fontsource/dm-sans/400.css'
+import '@fontsource/dm-sans/500.css'
+import '@fontsource/dm-sans/600.css'
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const {
+  title = 'Lunáticos Indumentaria — Ushuaia',
+  description = 'Indumentaria deportiva y artículos de regalería en Ushuaia. Camisetas oficiales, buzos y más. Lunes a Sábados de 10 a 13 y de 15:30 a 20 hs.',
+} = Astro.props
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <Header />
+    <slot />
+    <Footer />
+
+    <style is:global>
+      :root {
+        color-scheme: dark;
+        --color-bg: #000000;
+        --color-surface: #111111;
+        --color-surface-2: #1A1A1A;
+        --color-primary: #00C040;
+        --color-primary-light: #33DD66;
+        --color-danger: #CC0000;
+        --entry-animation: -20px;
+      }
+
+      @media (min-width: 1400px) {
+        :root { --entry-animation: -80px; }
+      }
+
+      html {
+        font-family: 'DM Sans', system-ui, sans-serif;
+        background: var(--color-bg);
+        scroll-behavior: smooth;
+      }
+
+      body { overflow-x: hidden; }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar { width: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(34, 197, 94, 0.3);
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: rgba(34, 197, 94, 0.6);
+      }
+
+      p {
+        color: rgba(255,255,255,0.65);
+        line-height: 1.65;
+        font-size: 1rem;
+        font-weight: 400;
+      }
+
+      /* Glow hover utility */
+      .text__glow {
+        transition: color 0.25s ease, text-shadow 0.25s ease;
+      }
+      .text__glow:hover {
+        color: var(--color-primary);
+        text-shadow: 0 0 16px rgba(34, 197, 94, 0.5);
+      }
+
+      /* Header scroll blur — CSS scroll timeline (igual esland) */
+      #header-nav {
+        animation: nav-blur linear both;
+        animation-timeline: scroll();
+        animation-range: 0 350px;
+      }
+      @keyframes nav-blur {
+        to {
+          background: rgba(10, 10, 10, 0.85);
+          backdrop-filter: blur(14px);
+          box-shadow: 0 2px 30px rgba(0,0,0,0.5),
+                      0 1px 0 rgba(34, 197, 94, 0.08);
+        }
+      }
+
+      /* Glow button */
+      .btn-glow {
+        transition: box-shadow 0.3s ease, background-color 0.2s ease;
+      }
+      .btn-glow:hover {
+        box-shadow: 0 0 24px rgba(34, 197, 94, 0.45), 0 0 48px rgba(34, 197, 94, 0.15);
+      }
+
+      /* Section title */
+      .section-title {
+        font-family: 'Oswald', sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        color: white;
+        line-height: 1.05;
+      }
+
+      /* Accent tag */
+      .tag {
+        font-family: 'DM Sans', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.25em;
+        text-transform: uppercase;
+        color: var(--color-primary);
+      }
+    </style>
+  </body>
+</html>

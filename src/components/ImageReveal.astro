@@ -1,0 +1,151 @@
+---
+interface Props {
+  src: string
+  alt?: string
+  label?: string
+  sublabel?: string
+  objectPosition?: string
+}
+
+const {
+  src,
+  alt = '',
+  label,
+  sublabel,
+  objectPosition = 'center center',
+} = Astro.props
+---
+
+<!--
+  ImageReveal — cinematic full-screen section transition
+  350vh scroll space → image holds fully visible for ~60% of scroll (~210vh)
+  Timeline: fade-in (0–0.2) · hold (0.2–0.80) · fade-out (0.80–0.95) · bg gone (0.95–1.0)
+-->
+<div class="ir-wrap relative" style="height: 350vh;">
+  <div class="ir-sticky sticky top-0 overflow-hidden bg-black" style="height: 100dvh;">
+
+    <!-- Full-screen image -->
+    <img
+      src={src}
+      alt={alt}
+      class="ir-img absolute inset-0 w-full h-full object-cover"
+      style={`object-position: ${objectPosition};`}
+      draggable="false"
+    />
+
+    <!-- Cinematic gradients -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30 pointer-events-none"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/15 via-transparent to-black/15 pointer-events-none"></div>
+
+    <!-- Brand halftone corners -->
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <div class="absolute top-0 left-0 w-32 h-32 sm:w-44 sm:h-44 md:w-56 md:h-56 halftone-red opacity-30"></div>
+      <div class="absolute top-0 right-0 w-32 h-32 sm:w-44 sm:h-44 md:w-56 md:h-56 halftone-green opacity-30"></div>
+    </div>
+
+    <!-- Brand accent lines -->
+    <div class="absolute left-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-transparent via-primary to-transparent opacity-50 pointer-events-none"></div>
+    <div class="absolute right-0 top-0 bottom-0 w-[3px] bg-gradient-to-b from-transparent via-danger to-transparent opacity-50 pointer-events-none"></div>
+
+    <!-- Section label (optional) -->
+    {label && (
+      <div class="ir-label absolute bottom-10 sm:bottom-14 md:bottom-20 left-0 right-0 text-center pointer-events-none px-5">
+        {sublabel && (
+          <div class="flex items-center justify-center gap-3 mb-2 sm:mb-3">
+            <div class="w-4 sm:w-5 h-px bg-danger"></div>
+            <span class="font-dm font-600 text-[9px] sm:text-[10px] tracking-[0.4em] uppercase text-white/45">{sublabel}</span>
+            <div class="w-4 sm:w-5 h-px bg-primary"></div>
+          </div>
+        )}
+        <h2 class="font-oswald font-700 text-4xl sm:text-6xl md:text-8xl lg:text-9xl uppercase tracking-tight text-white leading-none
+                   drop-shadow-[0_4px_30px_rgba(0,0,0,0.9)]">
+          {label}
+        </h2>
+      </div>
+    )}
+
+  </div>
+</div>
+
+<script>
+  import gsap from 'gsap'
+  import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  document.querySelectorAll<HTMLElement>('.ir-wrap').forEach((wrap) => {
+    const img    = wrap.querySelector<HTMLElement>('.ir-img')!
+    const sticky = wrap.querySelector<HTMLElement>('.ir-sticky')!
+    const label  = wrap.querySelector<HTMLElement>('.ir-label')
+
+    // Hidden initially
+    gsap.set(img, { opacity: 0, scale: 1.08 })
+    if (label) gsap.set(label, { opacity: 0, y: 30 })
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: wrap,
+        start:   'top top',
+        end:     'bottom bottom',
+        scrub:   1.5,   // slightly higher = smoother on mobile
+      },
+    })
+
+    // ── Fade IN quickly (positions 0 → 0.2) ──
+    tl.to(img, {
+      opacity:  1,
+      scale:    1,
+      duration: 0.2,
+      ease:     'power2.out',
+    })
+
+    // ── Label rises in slightly after (0.3 → 0.45) ──
+    if (label) {
+      tl.to(label, {
+        opacity:  1,
+        y:        0,
+        duration: 0.15,
+        ease:     'power2.out',
+      }, 0.3)
+    }
+
+    // ── HOLD at full opacity: 0.2 → 0.80 (gap in timeline, GSAP holds last value) ──
+
+    // ── Fade OUT (positions 0.80 → 0.95) ──
+    tl.to(img, {
+      opacity:  0,
+      scale:    0.97,
+      duration: 0.15,
+      ease:     'power2.in',
+    }, 0.80)
+
+    if (label) {
+      tl.to(label, {
+        opacity:  0,
+        duration: 0.12,
+        ease:     'power2.in',
+      }, 0.80)
+    }
+
+    // ── Clear sticky bg (0.95 → 1.0) ──
+    tl.to(sticky, {
+      opacity:  0,
+      duration: 0.05,
+    }, 0.95)
+  })
+</script>
+
+<style>
+  .halftone-red {
+    background-image: radial-gradient(circle, #CC0000 1.5px, transparent 1.5px);
+    background-size: 12px 12px;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+  }
+  .halftone-green {
+    background-image: radial-gradient(circle, #00C040 1.5px, transparent 1.5px);
+    background-size: 12px 12px;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 0%, transparent 75%);
+  }
+</style>

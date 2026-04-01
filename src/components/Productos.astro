@@ -1,0 +1,147 @@
+---
+const productos = [
+  {
+    nombre: 'Argentina — Training Dark',
+    categoria: 'Selección Argentina',
+    descripcion: 'Buzo de entrenamiento AFA 2024. Adidas Formotion. Azul navy con celeste.',
+    imagen: '/images/prod-arg-training-dark.jpg',
+    badge: 'NUEVO',
+    badgeColor: 'bg-primary text-[#0A0A0A]',
+    col: 'col-span-10 lg:col-span-4',
+  },
+  {
+    nombre: 'Argentina — Titular',
+    categoria: 'Selección Argentina',
+    descripcion: 'Camiseta titular AFA, 3 estrellas. Edición especial conmemorativa. La más pedida.',
+    imagen: '/images/prod-arg-titular.jpg',
+    badge: 'BEST SELLER',
+    badgeColor: 'bg-yellow-400 text-[#0A0A0A]',
+    col: 'col-span-10 lg:col-span-6',
+  },
+  {
+    nombre: 'Argentina — Training White',
+    categoria: 'Selección Argentina',
+    descripcion: 'Versión blanca del buzo de entrenamiento oficial AFA 2024. Adidas Formotion.',
+    imagen: '/images/prod-arg-training-white.jpg',
+    badge: null,
+    badgeColor: '',
+    col: 'col-span-10 lg:col-span-6',
+  },
+  {
+    nombre: 'River Plate — Alternativa',
+    categoria: 'Clubes Nacionales',
+    descripcion: 'Camiseta alternativa 2024 de River Plate. Violeta con detalles en rojo. Edición limitada.',
+    imagen: '/images/prod-river.jpg',
+    badge: 'LIMITADA',
+    badgeColor: 'bg-danger text-white',
+    col: 'col-span-10 lg:col-span-4',
+  },
+  {
+    nombre: 'Boca Juniors — Titular',
+    categoria: 'Clubes Nacionales',
+    descripcion: 'La azul y oro de Boca. Versión 2024 con sponsor Betsson. Adidas oficial.',
+    imagen: '/images/prod-boca.jpg',
+    badge: null,
+    badgeColor: '',
+    col: 'col-span-10 lg:col-span-6',
+  },
+]
+---
+
+<section id="productos" class="w-full py-16 md:py-24">
+  <!-- Section header -->
+  <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mb-10">
+    <span class="tag">Lo que tenemos</span>
+    <div class="flex items-end justify-between mt-2 gap-6 flex-wrap">
+      <h2 class="section-title text-4xl md:text-5xl lg:text-6xl">
+        Productos <span class="text-primary">Destacados</span>
+      </h2>
+      <a
+        href="https://www.instagram.com/lunaticosindumentaria/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text__glow text-white/35 font-dm text-sm tracking-wider uppercase hidden md:flex items-center gap-2"
+      >
+        Ver todo en Instagram →
+      </a>
+    </div>
+  </div>
+
+  <!-- Bento grid — patrón esland -->
+  <div
+    class="w-full max-w-7xl
+      grid lg:grid-cols-10 auto-rows-[18rem] sm:auto-rows-[22rem] md:auto-rows-[28rem] lg:auto-rows-[32rem] gap-3 md:gap-4
+      mx-auto px-4 sm:px-6 md:px-12 lg:px-20"
+  >
+    {productos.map((p) => (
+      <article
+        class={`
+          ${p.col}
+          relative rounded-2xl overflow-hidden border border-white/[0.06] group cursor-default
+          bg-surface
+        `}
+      >
+        <!-- Image lazy-loaded -->
+        <div
+          class="background absolute inset-0 bg-cover bg-center bg-no-repeat opacity-85 transition-transform duration-700 ease-in-out group-hover:scale-105"
+          data-src={p.imagen}
+          style="background-color: #1A1A1A; background-size: contain; background-position: center; background-repeat: no-repeat;"
+        ></div>
+
+        <!-- Gradient overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent from-40% via-[#0A0A0A]/50 to-[#0A0A0A]/90"></div>
+
+        <!-- Badge -->
+        {p.badge && (
+          <div class="absolute top-4 left-4 z-20">
+            <span class={`${p.badgeColor} font-dm font-700 text-xs tracking-widest uppercase px-3 py-1 rounded-full`}>
+              {p.badge}
+            </span>
+          </div>
+        )}
+
+        <!-- Content -->
+        <div class="absolute bottom-0 left-0 right-0 z-20 p-5 md:p-6 flex flex-col gap-1.5">
+          <span class="tag text-primary/70">{p.categoria}</span>
+          <h3 class="font-oswald font-600 text-xl md:text-2xl text-white uppercase tracking-wide group-hover:text-primary transition-colors duration-300">
+            {p.nombre}
+          </h3>
+          <p class="text-white/55 font-dm text-sm leading-relaxed max-w-sm line-clamp-2">
+            {p.descripcion}
+          </p>
+        </div>
+
+        <!-- Bottom glow line on hover -->
+        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-500 group-hover:w-full"></div>
+      </article>
+    ))}
+  </div>
+
+  <!-- Mobile link -->
+  <div class="flex justify-center mt-10 md:hidden">
+    <a href="https://www.instagram.com/lunaticosindumentaria/" target="_blank" rel="noopener noreferrer"
+      class="text__glow text-white/35 font-dm text-sm tracking-wider uppercase flex items-center gap-2">
+      Ver todo en Instagram →
+    </a>
+  </div>
+</section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const bgs = document.querySelectorAll('.background') as NodeListOf<HTMLElement>
+    if (!window.IntersectionObserver) {
+      bgs.forEach((el) => { el.style.backgroundImage = `url('${el.dataset.src}')` })
+      return
+    }
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const t = e.target as HTMLElement
+          t.style.backgroundImage = `url('${t.dataset.src}')`
+          obs.unobserve(t)
+        }
+      })
+    }, { rootMargin: '120px' })
+    bgs.forEach((el) => obs.observe(el))
+  })
+</script>

@@ -1,0 +1,42 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import Hero from '@/components/Hero.astro'
+import Productos from '@/components/Productos.astro'
+import Numeros from '@/components/Numeros.tsx'
+import Horarios from '@/components/Horarios.astro'
+import Nosotros from '@/components/Nosotros.astro'
+import Contacto from '@/components/Contacto.astro'
+import ImageReveal from '@/components/ImageReveal.astro'
+---
+
+<Layout
+  title="Lunáticos Indumentaria — Ushuaia, Tierra del Fuego"
+  description="Indumentaria deportiva y artículos de regalería en Ushuaia. Camisetas de la Selección Argentina, River, Boca y más. Lunes a Sábados 10-13 y 15:30-20 hs."
+>
+  <Hero />
+  <Productos />
+  <Numeros client:visible />
+  <Horarios />
+
+  <!-- Messi reveal → intro cinematic antes de Nosotros -->
+  <ImageReveal
+    src="/images/messi.jpg"
+    alt="Lionel Messi — Argentina"
+    label="Quiénes somos"
+    sublabel="La pasión que nos mueve"
+    objectPosition="center top"
+  />
+
+  <Nosotros />
+
+  <!-- Messi Copa reveal → cierre cinematic antes de Contacto -->
+  <ImageReveal
+    src="/images/messi-copa.png"
+    alt="Messi besando la Copa del Mundo"
+    label="Contacto"
+    sublabel="Hablemos de fútbol"
+    objectPosition="center 20%"
+  />
+
+  <Contacto />
+</Layout>
