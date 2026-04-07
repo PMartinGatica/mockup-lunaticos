@@ -1,60 +1,61 @@
 ---
+const categorias = [
+  { id: 'todos', label: 'Todos' },
+  { id: 'seleccion', label: 'Selección Argentina' },
+  { id: 'camperas', label: 'Camperas' },
+  { id: 'shorts', label: 'Shorts' },
+  { id: 'vasos', label: 'Vasos & Botellas' },
+  { id: 'accesorios', label: 'Accesorios' },
+]
+
 const productos = [
-  {
-    nombre: 'Argentina — Training Dark',
-    categoria: 'Selección Argentina',
-    descripcion: 'Buzo de entrenamiento AFA 2024. Adidas Formotion. Azul navy con celeste.',
-    imagen: '/images/prod-arg-training-dark.jpg',
-    badge: 'NUEVO',
-    badgeColor: 'bg-primary text-[#0A0A0A]',
-    col: 'col-span-10 lg:col-span-4',
-  },
-  {
-    nombre: 'Argentina — Titular',
-    categoria: 'Selección Argentina',
-    descripcion: 'Camiseta titular AFA, 3 estrellas. Edición especial conmemorativa. La más pedida.',
-    imagen: '/images/prod-arg-titular.jpg',
-    badge: 'BEST SELLER',
-    badgeColor: 'bg-yellow-400 text-[#0A0A0A]',
-    col: 'col-span-10 lg:col-span-6',
-  },
-  {
-    nombre: 'Argentina — Training White',
-    categoria: 'Selección Argentina',
-    descripcion: 'Versión blanca del buzo de entrenamiento oficial AFA 2024. Adidas Formotion.',
-    imagen: '/images/prod-arg-training-white.jpg',
-    badge: null,
-    badgeColor: '',
-    col: 'col-span-10 lg:col-span-6',
-  },
-  {
-    nombre: 'River Plate — Alternativa',
-    categoria: 'Clubes Nacionales',
-    descripcion: 'Camiseta alternativa 2024 de River Plate. Violeta con detalles en rojo. Edición limitada.',
-    imagen: '/images/prod-river.jpg',
-    badge: 'LIMITADA',
-    badgeColor: 'bg-danger text-white',
-    col: 'col-span-10 lg:col-span-4',
-  },
-  {
-    nombre: 'Boca Juniors — Titular',
-    categoria: 'Clubes Nacionales',
-    descripcion: 'La azul y oro de Boca. Versión 2024 con sponsor Betsson. Adidas oficial.',
-    imagen: '/images/prod-boca.jpg',
-    badge: null,
-    badgeColor: '',
-    col: 'col-span-10 lg:col-span-6',
-  },
+  // Selección Argentina
+  { nombre: 'Titular Argentina', imagen: '/images/prod-arg-titular.jpg', categoria: 'seleccion' },
+  { nombre: 'Training Dark Argentina', imagen: '/images/prod-arg-training-dark.jpg', categoria: 'seleccion' },
+  { nombre: 'Training White Argentina', imagen: '/images/prod-arg-training-white.jpg', categoria: 'seleccion' },
+  { nombre: 'Conjunto Selección Argentina', imagen: '/images/conjunto seleccion argentina.jpeg', categoria: 'seleccion' },
+  { nombre: 'Campera Selección Argentina', imagen: '/images/campera seleccion argentina.jpeg', categoria: 'seleccion' },
+  { nombre: 'Short Selección & Miami', imagen: '/images/short de la seleccion argentina y miami.jpeg', categoria: 'seleccion' },
+
+  // Camperas
+  { nombre: 'Campera Boca Juniors', imagen: '/images/campera boca.jpeg', categoria: 'camperas' },
+  { nombre: 'Campera Boca Juniors 2', imagen: '/images/campera boca 2.jpeg', categoria: 'camperas' },
+  { nombre: 'Campera Boca Juniors 3', imagen: '/images/campera boca 3.jpeg', categoria: 'camperas' },
+  { nombre: 'Campera River Plate', imagen: '/images/campera river.jpeg', categoria: 'camperas' },
+  { nombre: 'Campera River Plate 2', imagen: '/images/campera river 2.jpeg', categoria: 'camperas' },
+  { nombre: 'Campera Racing', imagen: '/images/campera racing.jpeg', categoria: 'camperas' },
+  { nombre: 'Campera Newells', imagen: '/images/campera newells.jpeg', categoria: 'camperas' },
+  { nombre: 'Campera Rosario Central', imagen: '/images/campera rosario central.jpeg', categoria: 'camperas' },
+  { nombre: 'Campera Tigre FC', imagen: '/images/campera de tigre FC.jpeg', categoria: 'camperas' },
+  { nombre: 'Camiseta River Plate', imagen: '/images/prod-river.jpg', categoria: 'camperas' },
+  { nombre: 'Camiseta Boca Juniors', imagen: '/images/prod-boca.jpg', categoria: 'camperas' },
+
+  // Shorts
+  { nombre: 'Shorts Varios', imagen: '/images/short normales.jpeg', categoria: 'shorts' },
+  { nombre: 'Short River & Boca', imagen: '/images/short river y boca.jpeg', categoria: 'shorts' },
+
+  // Vasos & Botellas
+  { nombre: 'Vasos Jugadores Argentina', imagen: '/images/vasos con las caras de los jugadores de argentina.jpeg', categoria: 'vasos' },
+  { nombre: 'Vasos Térmicos Clubes', imagen: '/images/vasos termicos de futbol de los clubes.jpeg', categoria: 'vasos' },
+  { nombre: 'Vasos Térmicos Stanley', imagen: '/images/vasos termicos stanley.jpeg', categoria: 'vasos' },
+  { nombre: 'Botellas Mickey & Spiderman', imagen: '/images/botellas de agua mickey y spiderman.jpeg', categoria: 'vasos' },
+  { nombre: 'Chops Messi & Equipos', imagen: '/images/chops de cerveza de messi y equipos.jpeg', categoria: 'vasos' },
+
+  // Accesorios
+  { nombre: 'Antiparras, Cintas de Capitán & Más', imagen: '/images/antiparras cintas de capitan  ,articulos varios.jpeg', categoria: 'accesorios' },
+  { nombre: 'Relojes & Billeteras', imagen: '/images/relojes billeteras varios.jpeg', categoria: 'accesorios' },
+  { nombre: 'Riñoneras de Equipos', imagen: '/images/riñoneras de equipos de futbol.jpeg', categoria: 'accesorios' },
 ]
 ---
 
 <section id="productos" class="w-full py-16 md:py-24">
-  <!-- Section header -->
-  <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20 mb-10">
+  <div class="max-w-7xl mx-auto px-6 md:px-12 lg:px-20">
+
+    <!-- Header -->
     <span class="tag">Lo que tenemos</span>
-    <div class="flex items-end justify-between mt-2 gap-6 flex-wrap">
+    <div class="flex items-end justify-between mt-2 gap-6 flex-wrap mb-10">
       <h2 class="section-title text-4xl md:text-5xl lg:text-6xl">
-        Productos <span class="text-primary">Destacados</span>
+        Nuestros <span class="text-primary">Productos</span>
       </h2>
       <a
         href="https://www.instagram.com/lunaticosindumentaria/"
@@ -65,83 +66,159 @@ const productos = [
         Ver todo en Instagram →
       </a>
     </div>
-  </div>
 
-  <!-- Bento grid — patrón esland -->
-  <div
-    class="w-full max-w-7xl
-      grid lg:grid-cols-10 auto-rows-[18rem] sm:auto-rows-[22rem] md:auto-rows-[28rem] lg:auto-rows-[32rem] gap-3 md:gap-4
-      mx-auto px-4 sm:px-6 md:px-12 lg:px-20"
-  >
-    {productos.map((p) => (
-      <article
-        class={`
-          ${p.col}
-          relative rounded-2xl overflow-hidden border border-white/[0.06] group cursor-default
-          bg-surface
-        `}
-      >
-        <!-- Image lazy-loaded -->
-        <div
-          class="background absolute inset-0 bg-cover bg-center bg-no-repeat opacity-85 transition-transform duration-700 ease-in-out group-hover:scale-105"
-          data-src={p.imagen}
-          style="background-color: #1A1A1A; background-size: contain; background-position: center; background-repeat: no-repeat;"
-        ></div>
+    <!-- Filtros de categoría -->
+    <div class="flex flex-wrap gap-2 mb-8" id="filtros">
+      {categorias.map((cat) => (
+        <button
+          data-cat={cat.id}
+          class={`filtro-btn font-dm text-xs uppercase tracking-widest px-4 py-2 rounded-full border transition-all duration-200
+            ${cat.id === 'todos'
+              ? 'bg-primary text-[#0A0A0A] border-primary'
+              : 'bg-transparent text-white/50 border-white/15 hover:border-primary/50 hover:text-white'
+            }`}
+        >
+          {cat.label}
+        </button>
+      ))}
+    </div>
 
-        <!-- Gradient overlay -->
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent from-40% via-[#0A0A0A]/50 to-[#0A0A0A]/90"></div>
-
-        <!-- Badge -->
-        {p.badge && (
-          <div class="absolute top-4 left-4 z-20">
-            <span class={`${p.badgeColor} font-dm font-700 text-xs tracking-widest uppercase px-3 py-1 rounded-full`}>
-              {p.badge}
-            </span>
+    <!-- Grilla de productos -->
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-4" id="galeria">
+      {productos.map((p) => (
+        <button
+          class="producto-card group relative aspect-square rounded-xl overflow-hidden border border-white/[0.06] bg-surface cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary"
+          data-categoria={p.categoria}
+          data-imagen={p.imagen}
+          data-nombre={p.nombre}
+          aria-label={`Ver ${p.nombre}`}
+        >
+          <img
+            src={p.imagen}
+            alt={p.nombre}
+            loading="lazy"
+            class="w-full h-full object-contain p-2 transition-transform duration-500 group-hover:scale-105"
+          />
+          <!-- Overlay con nombre -->
+          <div class="absolute inset-0 bg-gradient-to-t from-[#0A0A0A]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
+            <span class="text-white font-dm text-xs leading-tight text-left">{p.nombre}</span>
           </div>
-        )}
+          <!-- Ícono lupa -->
+          <div class="absolute top-2 right-2 bg-black/50 rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0zm-2 0v.01M11 9h.01M11 13h.01" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11h4" />
+            </svg>
+          </div>
+        </button>
+      ))}
+    </div>
 
-        <!-- Content -->
-        <div class="absolute bottom-0 left-0 right-0 z-20 p-5 md:p-6 flex flex-col gap-1.5">
-          <span class="tag text-primary/70">{p.categoria}</span>
-          <h3 class="font-oswald font-600 text-xl md:text-2xl text-white uppercase tracking-wide group-hover:text-primary transition-colors duration-300">
-            {p.nombre}
-          </h3>
-          <p class="text-white/55 font-dm text-sm leading-relaxed max-w-sm line-clamp-2">
-            {p.descripcion}
-          </p>
-        </div>
-
-        <!-- Bottom glow line on hover -->
-        <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-primary transition-all duration-500 group-hover:w-full"></div>
-      </article>
-    ))}
-  </div>
-
-  <!-- Mobile link -->
-  <div class="flex justify-center mt-10 md:hidden">
-    <a href="https://www.instagram.com/lunaticosindumentaria/" target="_blank" rel="noopener noreferrer"
-      class="text__glow text-white/35 font-dm text-sm tracking-wider uppercase flex items-center gap-2">
-      Ver todo en Instagram →
-    </a>
+    <!-- Mobile link -->
+    <div class="flex justify-center mt-8 md:hidden">
+      <a
+        href="https://www.instagram.com/lunaticosindumentaria/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text__glow text-white/35 font-dm text-sm tracking-wider uppercase flex items-center gap-2"
+      >
+        Ver todo en Instagram →
+      </a>
+    </div>
   </div>
 </section>
 
+<!-- Lightbox -->
+<div
+  id="lightbox"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/90 backdrop-blur-sm p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Vista ampliada"
+>
+  <button
+    id="lightbox-close"
+    class="absolute top-4 right-4 text-white/70 hover:text-white transition-colors z-10 bg-white/10 rounded-full p-2"
+    aria-label="Cerrar"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  </button>
+  <div class="flex flex-col items-center gap-4 max-w-3xl w-full">
+    <img
+      id="lightbox-img"
+      src=""
+      alt=""
+      class="max-h-[80vh] w-auto max-w-full object-contain rounded-xl shadow-2xl"
+    />
+    <p id="lightbox-nombre" class="text-white/70 font-dm text-sm tracking-wide"></p>
+  </div>
+</div>
+
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const bgs = document.querySelectorAll('.background') as NodeListOf<HTMLElement>
-    if (!window.IntersectionObserver) {
-      bgs.forEach((el) => { el.style.backgroundImage = `url('${el.dataset.src}')` })
-      return
-    }
-    const obs = new IntersectionObserver((entries) => {
-      entries.forEach((e) => {
-        if (e.isIntersecting) {
-          const t = e.target as HTMLElement
-          t.style.backgroundImage = `url('${t.dataset.src}')`
-          obs.unobserve(t)
+  // Filtros
+  const filtros = document.querySelectorAll<HTMLButtonElement>('.filtro-btn')
+  const cards = document.querySelectorAll<HTMLButtonElement>('.producto-card')
+
+  filtros.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.cat!
+
+      // Estilos activo/inactivo
+      filtros.forEach((b) => {
+        b.classList.remove('bg-primary', 'text-[#0A0A0A]', 'border-primary')
+        b.classList.add('bg-transparent', 'text-white/50', 'border-white/15')
+      })
+      btn.classList.add('bg-primary', 'text-[#0A0A0A]', 'border-primary')
+      btn.classList.remove('bg-transparent', 'text-white/50', 'border-white/15')
+
+      // Mostrar/ocultar cards
+      cards.forEach((card) => {
+        if (cat === 'todos' || card.dataset.categoria === cat) {
+          card.style.display = ''
+        } else {
+          card.style.display = 'none'
         }
       })
-    }, { rootMargin: '120px' })
-    bgs.forEach((el) => obs.observe(el))
+    })
+  })
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox')!
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement
+  const lightboxNombre = document.getElementById('lightbox-nombre')!
+  const lightboxClose = document.getElementById('lightbox-close')!
+
+  function abrirLightbox(imagen: string, nombre: string) {
+    lightboxImg.src = imagen
+    lightboxImg.alt = nombre
+    lightboxNombre.textContent = nombre
+    lightbox.classList.remove('hidden')
+    lightbox.classList.add('flex')
+    document.body.style.overflow = 'hidden'
+  }
+
+  function cerrarLightbox() {
+    lightbox.classList.add('hidden')
+    lightbox.classList.remove('flex')
+    lightboxImg.src = ''
+    document.body.style.overflow = ''
+  }
+
+  cards.forEach((card) => {
+    card.addEventListener('click', () => {
+      abrirLightbox(card.dataset.imagen!, card.dataset.nombre!)
+    })
+  })
+
+  lightboxClose.addEventListener('click', cerrarLightbox)
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) cerrarLightbox()
+  })
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') cerrarLightbox()
   })
 </script>
